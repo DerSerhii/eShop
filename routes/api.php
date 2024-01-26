@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,3 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::group(['namespace' => 'App\Http\Controllers\Order'], function () {
+    Route::post('/order', 'OrderController@store');
+});
