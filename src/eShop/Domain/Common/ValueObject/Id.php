@@ -25,7 +25,7 @@ final class Id
         return $id;
     }
 
-    public function getId(): int
+    public function getValue(): int
     {
         return $this->id;
     }
