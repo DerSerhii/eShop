@@ -18,13 +18,12 @@ class OrderTransformService
                 'quantity' => $productOrder->getOrderQuantity()->getValue(),
             ];
         }
-
         return [
             'data' => [
-                'email' => $order->getCustomer()->getEmail()->getValue(),
+                'customer' => $order->getCustomer()->getEmail()->getValue(),
                 'productLine' => $productLineData,
-                'total' => 0,
-                'bonus' => 0,
+                'orderTotal' => $order->getOrderTotal()->getValue(),
+                'orderBonus' => $order->getOrderBonus()->getValue(),
             ]
         ];
     }
