@@ -21,9 +21,66 @@
   - Сума замовлення
   - Нарахований бонус (0, якщо немає)
 
-
 Можна захардкодити продукти, які будуть купуватись, в коді.
 Врахувати, що для розрахунку суми замовлення, продуктам потрібно вказати вартість.
 Для зручності можна покласти продукти в конфіг. Використання БД не обов’язково.
 
 Як результат завдання, очікується роут, до якого можна звернутись в Postman/curl з можливістю купити більше 1 продукта враховуючи перераховані вище умови. 
+
+### Launch project
+
+To run the project do:
+```
+php artisan serve
+```
+Send a request using curl:
+```json lines
+curl -X POST -H "Content-Type: application/json" -d '{
+    "email": "customer@mail.com",
+    "products": [
+        {
+            "id": 1,
+            "quantity": 10
+        },
+        {
+            "id": 2,
+            "quantity": 10
+        },
+        {
+            "id": 6,
+            "quantity": 4
+        }
+    ]
+}' http://127.0.0.1:8000/api/order/
+```
+
+Should get a response:
+```json
+{
+    "data": {
+        "customer": "customer@mail.com",
+        "productLine": [
+            {
+                "id": 1,
+                "name": "Apple",
+                "price": 90,
+                "quantity": 10
+            },
+            {
+                "id": 2,
+                "name": "Pear",
+                "price": 10,
+                "quantity": 10
+            },
+            {
+                "id": 6,
+                "name": "Raspberry",
+                "price": 25,
+                "quantity": 4
+            }
+        ],
+        "orderTotal": 1100,
+        "orderBonus": 50
+    }
+}
+```
