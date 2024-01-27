@@ -34,7 +34,7 @@ To run the project do:
 php artisan serve
 ```
 Send a request using curl:
-```json lines
+```json 
 curl -X POST -H "Content-Type: application/json" -d '{
     "email": "customer@mail.com",
     "products": [
