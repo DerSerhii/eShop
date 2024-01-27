@@ -6,15 +6,13 @@ class OrderCalculatorService
 {
     private array $productList;
     private float $orderTotal;
-
     private float $bonusThreshold;
     private float $orderBonus;
 
-    public function __construct()
+    public function setBonusThreshold(float $bonusThreshold): void
     {
-        $this->bonusThreshold = config('shop.bonus_threshold', 100);
+        $this->bonusThreshold = $bonusThreshold;
     }
-
     public function setProductLine(array $productList): void
     {
         $this->productList = $productList;
@@ -36,7 +34,8 @@ class OrderCalculatorService
     {
         $orderTotal = 0;
         foreach ($this->productList as $item) {
-            $orderTotal += $item->getProductPrice()->getValue() * $item->getOrderQuantity()->getValue();
+            $orderTotal +=
+                $item->getProductPrice()->getValue() * $item->getOrderQuantity()->getValue();
         }
 
         $this->orderTotal = $orderTotal;
