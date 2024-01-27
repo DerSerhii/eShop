@@ -9,6 +9,7 @@ use eShop\Domain\Order\ValueObject\OrderBonus;
 use eShop\Domain\Order\ValueObject\OrderTotal;
 use eShop\Infrastructure\Order\Repository\OrderRepository;
 use eShop\Infrastructure\Order\Repository\ProductOrderRepository;
+use eShop\Infrastructure\Services\BonusThresholdService;
 use eShop\Infrastructure\Services\OrderCalculatorService;
 
 class OrderService implements OrderServiceInterface
@@ -16,7 +17,8 @@ class OrderService implements OrderServiceInterface
     public function __construct(
         private readonly ProductOrderRepository $productOrderRepository,
         private readonly OrderRepository $orderRepository,
-        private readonly OrderCalculatorService $orderCalculatorService
+        private readonly OrderCalculatorService $orderCalculatorService,
+        private readonly BonusThresholdService $bonusThresholdService
     ) {
     }
 
@@ -43,6 +45,8 @@ class OrderService implements OrderServiceInterface
 
         $order = $this->orderRepository->create($customer, $orderProductLine);
 
+        $bonusThreshold = $this->bonusThresholdService->getBonusThreshold();
+        $this->orderCalculatorService->setBonusThreshold($bonusThreshold);
         $this->orderCalculatorService->setProductLine($orderProductLine);
 
         $orderTotal = $this->orderCalculatorService->getOrderTotal();
