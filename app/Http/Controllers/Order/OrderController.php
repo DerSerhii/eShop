@@ -4,16 +4,22 @@ namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\OrderRequest;
+use eShop\Infrastructure\Cart\Service\CartService;
 use eShop\Infrastructure\Customer\Service\CustomerService;
+use eShop\Infrastructure\Order\Service\OrderService;
+use eShop\Infrastructure\Services\OrderTransformService;
 use eShop\Infrastructure\Services\ProductLineService;
 use Illuminate\Http\JsonResponse;
 
 class OrderController extends Controller
 {
     public function store(
-        OrderRequest                $request,
-        CustomerService             $customerService,
-        ProductLineService          $productLineService
+        OrderRequest          $request,
+        CustomerService       $customerService,
+        ProductLineService    $productLineService,
+        CartService           $cartService,
+        OrderService          $orderService,
+        OrderTransformService $orderTransformService
     ): array|JsonResponse
     {
         $email = $request->input('email');
@@ -52,13 +58,10 @@ class OrderController extends Controller
 
         $customer = $customerService->add($email);
 
-        return [
-            'data' => [
-                'email' => $customer->getEmail()->getValue(),
-                'products' => $products,
-                'total' => 0,
-                'bonus' => 0
-            ]
-        ];
+        $cart = $cartService->add($customer, $productLine);
+
+        $order = $orderService->createOrder($cart);
+
+        return $orderTransformService->toArray($order);
     }
 }
