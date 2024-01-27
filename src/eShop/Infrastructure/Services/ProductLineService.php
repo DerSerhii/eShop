@@ -76,6 +76,23 @@ class ProductLineService
         return array_diff($this->productIds, $productIdsFromProducts);
     }
 
+    public function validateDuplicateIds(): array
+    {
+        $duplicateIds = [];
+        $seenIds = [];
+
+        foreach ($this->products as $productData) {
+            $productId = $productData['id'];
+
+            if (in_array($productId, $seenIds)) {
+                $duplicateIds[] = $productId;
+            } else {
+                $seenIds[] = $productId;
+            }
+        }
+
+        return $duplicateIds;
+    }
     public function validateQuantities(): array
     {
         $invalidProductIds = [];
