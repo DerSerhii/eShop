@@ -38,6 +38,17 @@ class OrderController extends Controller
             return response()->json($errorData, 400);
         }
 
+        $duplicateIds = $productLineService->validateDuplicateIds();
+
+        if(!empty($duplicateIds)) {
+            $message = 'The products has duplicates Ids: ' .
+                implode(', ', $duplicateIds) . '.';
+            $errorData = [
+                'message' => $message
+            ];
+            return response()->json($errorData, 400);
+        }
+
         $productWithInsufficientQuantity = $productLineService->validateQuantities();
 
         if (!empty($productWithInsufficientQuantity)) {
