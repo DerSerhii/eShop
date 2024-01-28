@@ -2,16 +2,20 @@
 
 namespace eShop\Infrastructure\Order\Repository;
 
-use eShop\Domain\Customer\Entity\Customer;
+use eShop\Domain\Common\ValueObject\Email;
 use eShop\Domain\Order\Entity\Order;
 use eShop\Domain\Order\Repository\OrderRepositoryInterface;
+use eShop\Domain\Order\ValueObject\OrderBonus;
+use eShop\Domain\Order\ValueObject\OrderTotal;
 
 class OrderRepository implements OrderRepositoryInterface
 {
-    public function create(Customer $customer, array $productLine)
+    public function create(
+        Email      $email,
+        OrderTotal $orderTotal,
+        OrderBonus $orderBonus
+    ): Order
     {
-        $order = new Order($customer, $productLine);
-
-        return $order;
+        return new Order($email, $orderTotal, $orderBonus);
     }
 }
