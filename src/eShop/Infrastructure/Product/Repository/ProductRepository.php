@@ -18,7 +18,7 @@ class ProductRepository implements ProductRepositoryInterface
         $this->productStorage = config('product_storage');
     }
 
-    public function retrieve(array $productIds): array
+    public function retrieveById(array $productIds): array
     {
         return collect($this->productStorage)
             ->whereIn('id', $productIds)
@@ -29,7 +29,6 @@ class ProductRepository implements ProductRepositoryInterface
                     new Price($item['price']),
                     new ProductQuantity($item['quantity'])
                 );
-            })
-            ->all();
+            })->all();
     }
 }
