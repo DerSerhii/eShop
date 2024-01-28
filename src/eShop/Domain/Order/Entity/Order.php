@@ -3,32 +3,25 @@
 namespace eShop\Domain\Order\Entity;
 
 
+use eShop\Domain\Common\ValueObject\Email;
 use eShop\Domain\Common\ValueObject\Id;
-use eShop\Domain\Customer\Entity\Customer;
 use eShop\Domain\Order\ValueObject\OrderBonus;
 use eShop\Domain\Order\ValueObject\OrderTotal;
 
 final class Order
 {
     private Id $id;
-    private Customer $customer;
-    private array $productLine;
+    private Email $email;
     private OrderTotal $orderTotal;
     private OrderBonus $orderBonus;
 
-    public function __construct(Customer $customer, array $productLine)
+    public function __construct(
+        Email $email,
+        OrderTotal $orderTotal,
+        OrderBonus $orderBonus)
     {
-        $this->customer = $customer;
-        $this->productLine = $productLine;
-    }
-
-    public function setOrderTotal(OrderTotal $orderTotal): void
-    {
+        $this->email = $email;
         $this->orderTotal = $orderTotal;
-    }
-
-    public function setOrderBonus(OrderBonus $orderBonus): void
-    {
         $this->orderBonus = $orderBonus;
     }
 
@@ -37,14 +30,9 @@ final class Order
         return $this->id;
     }
 
-    public function getCustomer(): Customer
+    public function getEmail(): Email
     {
-        return $this->customer;
-    }
-
-    public function getProductLine(): array
-    {
-        return $this->productLine;
+        return $this->email;
     }
 
     public function getOrderTotal(): OrderTotal
