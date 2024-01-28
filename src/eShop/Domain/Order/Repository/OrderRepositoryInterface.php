@@ -2,12 +2,16 @@
 
 namespace eShop\Domain\Order\Repository;
 
-use eShop\Domain\Customer\Entity\Customer;
+
+use eShop\Domain\Common\ValueObject\Email;
+use eShop\Domain\Order\ValueObject\OrderBonus;
+use eShop\Domain\Order\ValueObject\OrderTotal;
 
 interface OrderRepositoryInterface
 {
     public function create(
-        Customer $customer,
-        array $productLine
+        Email $email,
+        OrderTotal $orderTotal,
+        OrderBonus $orderBonus
     );
 }
