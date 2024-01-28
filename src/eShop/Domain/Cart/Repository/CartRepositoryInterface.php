@@ -3,12 +3,9 @@
 namespace eShop\Domain\Cart\Repository;
 
 
-use eShop\Domain\Customer\Entity\Customer;
+use eShop\Domain\Common\ValueObject\Email;
 
 interface CartRepositoryInterface
 {
-    public function create(
-        Customer $customer,
-        array $productLine
-    );
+    public function create(Email $email);
 }
