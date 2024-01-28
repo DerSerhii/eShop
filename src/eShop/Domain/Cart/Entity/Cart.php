@@ -2,35 +2,27 @@
 
 namespace eShop\Domain\Cart\Entity;
 
+use eShop\Domain\Common\ValueObject\Email;
 use eShop\Domain\Common\ValueObject\Id;
-use eShop\Domain\Customer\Entity\Customer;
 
 final class Cart
 {
     private Id $id;
-    private Customer $customer;
-    private array $productLine;
+    private Email $email;
 
-    public function __construct(Customer $customer, array $productLine)
+    public function __construct(Email $email)
     {
-        $this->customer = $customer;
-        $this->productLine = $productLine;
+        $this->email = $email;
     }
-
 
     public function getId(): Id
     {
         return $this->id;
     }
 
-    public function getCustomer(): Customer
+    public function getEmail(): Email
     {
-        return $this->customer;
-    }
-
-    public function getProductLine(): array
-    {
-        return $this->productLine;
+        return $this->email;
     }
 
     public function setId(Id $id): void
