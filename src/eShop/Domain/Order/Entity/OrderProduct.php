@@ -7,19 +7,22 @@ use eShop\Domain\Common\ValueObject\OrderQuantity;
 use eShop\Domain\Product\Entity\ProductStorage;
 use eShop\Domain\Product\ValueObject\Price;
 
-final class ProductOrder
+final class OrderProduct
 {
     private Id $id;
+    private Order $order;
     private ProductStorage $product;
     private OrderQuantity $orderQuantity;
     private Price $productPrice;
 
     public function __construct(
+        Order $order,
         ProductStorage $product,
         OrderQuantity $orderQuantity,
         Price $productPrice
     )
     {
+        $this->order = $order;
         $this->product = $product;
         $this->orderQuantity = $orderQuantity;
         $this->productPrice = $productPrice;
@@ -28,6 +31,11 @@ final class ProductOrder
     public function getId(): Id
     {
         return $this->id;
+    }
+
+    public function getOrder(): Order
+    {
+        return $this->order;
     }
 
     public function getProduct(): ProductStorage
