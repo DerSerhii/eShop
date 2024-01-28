@@ -1,19 +1,26 @@
 <?php
 
-namespace eShop\Infrastructure\Services;
+namespace eShop\Infrastructure\Order\Service;
 
 class OrderCalculatorService
 {
     private array $productList;
     private float $orderTotal;
-    private float $bonusThreshold;
     private float $orderBonus;
+    private float $bonusThreshold;
+    private float $discount;
 
     public function setBonusThreshold(float $bonusThreshold): void
     {
         $this->bonusThreshold = $bonusThreshold;
     }
-    public function setProductLine(array $productList): void
+
+    public function setDiscount(float $discount): void
+    {
+        $this->discount = $discount;
+    }
+
+    public function setProductList(array $productList): void
     {
         $this->productList = $productList;
         $this->calculateOrderTotal();
@@ -33,9 +40,10 @@ class OrderCalculatorService
     private function calculateOrderTotal(): void
     {
         $orderTotal = 0;
-        foreach ($this->productList as $item) {
-            $orderTotal +=
-                $item->getProductPrice()->getValue() * $item->getOrderQuantity()->getValue();
+        foreach ($this->productList as $product) {
+            $price = $product->getProductPrice();
+            $quantity = $product->getOrderQuantity()->getValue();
+            $orderTotal += $price  * $quantity;
         }
 
         $this->orderTotal = $orderTotal;
@@ -43,8 +51,8 @@ class OrderCalculatorService
 
     private function calculateOrderBonus(): void
     {
-        $this->orderBonus =
-            $this->orderTotal > $this->bonusThreshold
-                ? ($this->orderTotal - $this->bonusThreshold) * 0.05 : 0;
+        $bonusCalculation = ($this->orderTotal - $this->bonusThreshold) * $this->discount/100;
+
+        $this->orderBonus = $this->orderTotal > $this->bonusThreshold ? $bonusCalculation : 0;
     }
 }
