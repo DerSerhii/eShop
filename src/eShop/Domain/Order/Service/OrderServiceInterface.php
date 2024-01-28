@@ -2,9 +2,9 @@
 
 namespace eShop\Domain\Order\Service;
 
-use eShop\Domain\Cart\Entity\Cart;
+use eShop\Domain\Cart\Entity\CartProductCollection;
 
 interface OrderServiceInterface
 {
-    public function createOrder(Cart $cart);
+    public function makeOrder(CartProductCollection $cart);
 }
