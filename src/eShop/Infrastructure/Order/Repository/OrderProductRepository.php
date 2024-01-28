@@ -3,20 +3,21 @@
 namespace eShop\Infrastructure\Order\Repository;
 
 use eShop\Domain\Common\ValueObject\OrderQuantity;
-use eShop\Domain\Order\Entity\ProductOrder;
-use eShop\Domain\Order\Repository\ProductOrderRepositoryInterface;
+use eShop\Domain\Order\Entity\Order;
+use eShop\Domain\Order\Entity\OrderProduct;
+use eShop\Domain\Order\Repository\OrderProductRepositoryInterface;
 use eShop\Domain\Product\Entity\ProductStorage;
 use eShop\Domain\Product\ValueObject\Price;
 
-class ProductOrderRepository implements ProductOrderRepositoryInterface
+class OrderProductRepository implements OrderProductRepositoryInterface
 {
-
     public function create(
+        Order $order,
         ProductStorage $product,
         OrderQuantity $orderQuantity,
         Price $productPrice
-    ): ProductOrder
+    ): OrderProduct
     {
-        return new ProductOrder($product, $orderQuantity, $productPrice);
+        return new OrderProduct($order, $product, $orderQuantity, $productPrice);
     }
 }
