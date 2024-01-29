@@ -9,10 +9,15 @@ final class Cart
 {
     private Id $id;
     private Email $email;
+    private CartProductCollection $productCollection;
 
-    public function __construct(Email $email)
+    public function __construct(
+        Email $email,
+        CartProductCollection $productCollection
+    )
     {
         $this->email = $email;
+        $this->productCollection = $productCollection;
     }
 
     public function getId(): Id
@@ -23,6 +28,11 @@ final class Cart
     public function getEmail(): Email
     {
         return $this->email;
+    }
+
+    public function getProductCollection(): array
+    {
+        return $this->productCollection->getCollection();
     }
 
     public function setId(Id $id): void

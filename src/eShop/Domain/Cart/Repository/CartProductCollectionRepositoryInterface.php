@@ -6,5 +6,5 @@ use eShop\Domain\Cart\Entity\Cart;
 
 interface CartProductCollectionRepositoryInterface
 {
-    public function create(Cart $cart, array $products);
+    public function create(array $products);
 }

@@ -6,21 +6,21 @@ use eShop\Domain\Common\ValueObject\Email;
 
 final class CartProductCollection
 {
-    private array $cartProductCollection;
+    private array $productCollection;
 
     public function __construct(array $cartProductCollection)
     {
-        $this->cartProductCollection = $cartProductCollection;
+        $this->productCollection = $cartProductCollection;
     }
 
-    public function getCartProductCollection(): array
+    public function getCollection(): array
     {
-        return $this->cartProductCollection;
+        return $this->productCollection;
     }
 
     public function getEmail(): Email
     {
-        return reset($this->cartProductCollection)->getCart()->getEmail();
+        return reset($this->productCollection)->getCart()->getEmail();
     }
 
 }
