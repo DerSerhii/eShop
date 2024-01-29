@@ -2,7 +2,6 @@
 
 namespace eShop\Infrastructure\Cart\Repository;
 
-use eShop\Domain\Cart\Entity\Cart;
 use eShop\Domain\Cart\Entity\CartProductCollection;
 use eShop\Domain\Cart\Repository\CartProductCollectionRepositoryInterface;
 use eShop\Infrastructure\Product\Repository\ProductRepository;
@@ -14,7 +13,7 @@ class CartProductCollectionRepository implements CartProductCollectionRepository
         private readonly CartProductRepository $cartProductRepository
     ) {
     }
-    public function create(Cart $cart, array $products): CartProductCollection
+    public function create(array $products): CartProductCollection
     {
         $cartProductCollection = [];
 
@@ -31,7 +30,7 @@ class CartProductCollectionRepository implements CartProductCollectionRepository
 
             if ($storageProduct) {
                 $quantity = $productData['quantity'];
-                $cartProduct = $this->cartProductRepository->create($cart, $storageProduct, $quantity);
+                $cartProduct = $this->cartProductRepository->create($storageProduct, $quantity);
                 $cartProductCollection[] = $cartProduct;
             }
         }
