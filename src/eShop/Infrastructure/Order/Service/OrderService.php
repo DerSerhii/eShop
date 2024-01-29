@@ -2,7 +2,7 @@
 
 namespace eShop\Infrastructure\Order\Service;
 
-use eShop\Domain\Cart\Entity\CartProductCollection;
+use eShop\Domain\Cart\Entity\Cart;
 use eShop\Domain\Order\Entity\OrderProductCollection;
 use eShop\Domain\Order\Service\OrderServiceInterface;
 use eShop\Domain\Order\Settings\OrderSettings;
@@ -21,7 +21,7 @@ class OrderService implements OrderServiceInterface
     ) {
     }
 
-    public function makeOrder(CartProductCollection $cart): OrderProductCollection
+    public function makeOrder(Cart $cart): OrderProductCollection
     {
         $bonusThreshold = $this->orderSettings->getBonusThreshold();
         $this->orderCalculatorService->setBonusThreshold($bonusThreshold);
@@ -29,7 +29,7 @@ class OrderService implements OrderServiceInterface
         $discount = $this->orderSettings->getDiscount();
         $this->orderCalculatorService->setDiscount($discount);
 
-        $cartProducts = $cart->getCartProductCollection();
+        $cartProducts = $cart->getProductCollection();
         $this->orderCalculatorService->setProductList($cartProducts);
 
         $orderTotal = $this->orderCalculatorService->getOrderTotal();
