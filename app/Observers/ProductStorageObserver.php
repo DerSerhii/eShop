@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 
+
 use eShop\Domain\Product\Model\ProductEloquent;
 
 class ProductStorageObserver
