@@ -12,4 +12,5 @@ class ProductStorageObserver
     {
         info('created');
     }
+
 }
